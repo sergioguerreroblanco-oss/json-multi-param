@@ -28,5 +28,5 @@ RUN cmake -S . -B build/release -DCMAKE_BUILD_TYPE=Release -G "Ninja" \
 # ---------------------------------------------------------------
 FROM ubuntu:22.04 AS runtime
 WORKDIR /app
-COPY --from=builder /app/build/release/task_scheduler /usr/local/bin/device_config_example
+COPY --from=builder /app/build/release/device_config_example /usr/local/bin/device_config_example
 ENTRYPOINT ["device_config_example"]
