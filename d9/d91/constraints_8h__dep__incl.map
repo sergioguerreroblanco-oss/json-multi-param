@@ -1,0 +1,12 @@
+<map id="include/constraints.h" name="include/constraints.h">
+<area shape="rect" id="Node000001" title="Value constraints for parameters." alt="" coords="84,5,241,31"/>
+<area shape="rect" id="Node000002" href="$d5/d33/param_8h.html" title="Typed parameter implementation." alt="" coords="49,79,175,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,44,122,80,118,77,144,41"/>
+<area shape="rect" id="Node000003" href="$d3/dac/param__set_8h.html" title="Parameter set (multi&#45;parameter container)." alt="" coords="85,152,240,177"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="179,42,189,71,191,104,182,131,172,153,167,151,177,129,185,104,184,72,174,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="131,114,157,150,152,153,126,117"/>
+<area shape="rect" id="Node000004" href="$df/d31/param__set_8cpp.html" title="Implementation of ParamSet: schema management and serialization." alt="" coords="5,233,147,258"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="141,189,91,234,87,230,138,185"/>
+<area shape="rect" id="Node000005" href="$d6/dbe/test__param__set__basic_8cpp.html" title="Unit tests for ParamSet core behavior." alt="" coords="171,225,330,265"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="187,184,231,223,228,227,184,188"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="include/value_type_traits.h" name="include/value_type_traits.h">
+<area shape="rect" id="Node000001" title="Compile&#45;time mapping between C++ types and ValueType." alt="" coords="90,5,235,45"/>
+<area shape="rect" id="Node000002" href="$d5/d33/param_8h.html" title="Typed parameter implementation." alt="" coords="99,93,226,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,59,165,93,160,93,160,59"/>
+<area shape="rect" id="Node000003" href="$d3/dac/param__set_8h.html" title="Parameter set (multi&#45;parameter container)." alt="" coords="85,167,240,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="165,132,165,167,160,167,160,132"/>
+<area shape="rect" id="Node000004" href="$df/d31/param__set_8cpp.html" title="Implementation of ParamSet: schema management and serialization." alt="" coords="5,247,147,273"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="141,203,91,249,87,245,138,199"/>
+<area shape="rect" id="Node000005" href="$d6/dbe/test__param__set__basic_8cpp.html" title="Unit tests for ParamSet core behavior." alt="" coords="171,240,330,280"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="187,199,231,238,228,242,184,203"/>
+</map>

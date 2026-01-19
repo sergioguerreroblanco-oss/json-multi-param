@@ -1,0 +1,18 @@
+<map id="include/param.h" name="include/param.h">
+<area shape="rect" id="Node000001" title="Typed parameter implementation." alt="" coords="145,5,271,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,80,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,33,83,76,81,71,180,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="139,225,197,251"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,33,165,53,145,80,137,114,139,150,148,184,159,212,154,214,143,185,134,151,132,114,140,78,161,49,186,29"/>
+<area shape="rect" id="Node000004" href="$d2/d04/constraints_8h.html" title="Value constraints for parameters." alt="" coords="155,79,261,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="211,31,211,65,205,65,205,31"/>
+<area shape="rect" id="Node000006" href="$d5/d51/param__base_8h.html" title="Abstract base class for typed parameters." alt="" coords="293,152,408,177"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="223,29,275,77,333,139,330,143,271,81,220,33"/>
+<area shape="rect" id="Node000007" href="$d8/d48/value__type__traits_8h.html" title="Compile&#45;time mapping between C++ types and ValueType." alt="" coords="336,79,483,104"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="241,28,365,71,363,77,239,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="207,105,177,213,172,211,202,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="206,152,269,177"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="215,103,230,138,225,140,210,105"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="322,180,212,223,210,218,320,175"/>
+<area shape="poly" id="edge9_Node000007_Node000006" title=" " alt="" coords="402,106,371,143,367,140,398,103"/>
+</map>
