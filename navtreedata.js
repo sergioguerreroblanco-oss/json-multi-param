@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "json-multi-param", "index.html", [
-    [ "JSON multi param", "index.html", "index" ],
+    [ "JSON Multi-Param", "index.html", "index" ],
     [ "Test List", "d4/df6/test.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],

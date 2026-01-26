@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>json-multi-param: JSON multi param</title>
+<title>json-multi-param: JSON Multi-Param</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">JSON multi param </div></div>
+  <div class="headertitle"><div class="title">JSON Multi-Param </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a> <img src="https://github.com/sergioguerreroblanco-oss/json-multi-param/actions/workflows/ci.yml/badge.svg" alt="CI" style="pointer-events: none;" class="inline"/></p>
@@ -98,32 +98,72 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <h1><a class="anchor" id="autotoc_md2"></a>
 ✨ Core Features</h1>
 <ul>
-<li><b>acbacbacfb</b><ul>
-<li>acbacb.</li>
-<li>acbacb.</li>
-<li>acbacb.</li>
+<li><b>Strongly-typed parameters</b><ul>
+<li>Define configuration parameters with explicit C++ types (<code>int</code>, <code>double</code>, <code>bool</code>, <code>std::string</code>).</li>
+<li>Type-safe access through templated <code>set&lt;T&gt;()</code> / <code>get&lt;T&gt;()</code> APIs.</li>
+</ul>
+</li>
+<li><b>Constraint-based validation</b><ul>
+<li>Numeric constraints: minimum / maximum values.</li>
+<li>String constraints: length limits and allowed value sets.</li>
+<li>Validation enforced on every assignment and deserialization.</li>
+</ul>
+</li>
+<li><b>Deterministic serialization</b><ul>
+<li>Stable, deterministic ordering of parameters for reproducible outputs.</li>
+<li>Suitable for logging, testing, and communication protocols.</li>
+</ul>
+</li>
+<li><b>Multiple serialization formats</b><ul>
+<li><b>Typed JSON</b> serialization using <code>nlohmann::json</code>.</li>
+<li><b>Compact string format</b> (<code>key=value;key=value;...</code>) designed for embedded or bus-based systems.</li>
+</ul>
+</li>
+<li><b>Robust parsing</b><ul>
+<li>Strict deserialization: unknown parameters and type mismatches are rejected.</li>
+<li>Escape-safe compact format supporting special characters (<code>;</code>, <code>=</code>, <code>\</code>).</li>
 </ul>
 </li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md4"></a>
+ <h1><a class="anchor" id="autotoc_md4"></a>
 🌟 Project Highlights</h1>
 <ul>
-<li><b>acbacb</b><ul>
-<li>acbacb.</li>
+<li><b>Designed for embedded and modular systems</b><ul>
+<li>Explicit parameter schemas shared across modules.</li>
+<li>Strict parsing model to prevent silent configuration drift.</li>
+</ul>
+</li>
+<li><b>Clear separation of concerns</b><ul>
+<li>Parameter definition, validation, and serialization are cleanly separated.</li>
+<li>No dependency on application-specific logic.</li>
+</ul>
+</li>
+<li><b>Modern C++ design</b><ul>
+<li>C++14-compliant, header-only traits and templated APIs.</li>
+<li>RAII-friendly and exception-aware error handling.</li>
+</ul>
+</li>
+<li><b>Test-driven development</b><ul>
+<li>Comprehensive unit tests covering validation, serialization, and edge cases.</li>
+<li>Deterministic outputs validated through automated tests.</li>
+</ul>
+</li>
+<li><b>CI-ready</b><ul>
+<li>Linux build and test pipeline using CMake, Ninja, and Docker.</li>
+<li>Reproducible builds validated in continuous integration.</li>
 </ul>
 </li>
 </ul>
 <hr  />
 <h1><a class="anchor" id="autotoc_md6"></a>
-🏗 Architecture</h1>
-<p>The following diagram illustrates the internal architecture of the project:</p>
-<div class="fragment"><div class="line">flowchart LR</div>
-</div><!-- fragment --><hr  />
+🏗 Data flow / Serialization flow</h1>
+<p><img src="docs/architecture_diagram.png" alt="Data flow / Serialization flow" class="inline"/></p>
+<hr  />
 <h1><a class="anchor" id="autotoc_md8"></a>
-🗂 Class Diagram</h1>
-<div class="fragment"><div class="line">classDiagram</div>
-</div><!-- fragment --><hr  />
+🗂 Class model</h1>
+<p><img src="docs/class_diagram.png" alt="Class model" class="inline"/></p>
+<hr  />
 <h1><a class="anchor" id="autotoc_md10"></a>
 🛠 Build Instructions</h1>
 <h2><a class="anchor" id="autotoc_md11"></a>
@@ -133,17 +173,21 @@ Windows (Visual Studio 2022)</h2>
 <li>Choose “Open Folder” → select the project root (json-multi-param/).</li>
 <li>Visual Studio automatically detects CMakePresets.json.</li>
 <li>In the toolbar, select a configuration:<ul>
-<li>debug → includes unit tests (BUILD_TESTING=ON).</li>
-<li>release → optimized build.</li>
+<li>debug → includes unit tests (BUILD_TESTING=ON)</li>
+<li>release → optimized build</li>
 </ul>
 </li>
 <li>Build the project (Ctrl + Shift + B).</li>
-<li>The executable will be generated at:</li>
+<li>The build produces:<ul>
+<li>A static library: json_multi_param</li>
+<li>Example executables (e.g. device_config_example.exe)</li>
+<li>Unit tests executable (tests.exe, debug only)</li>
+</ul>
+</li>
+<li>Executables are generated under:</li>
 </ol>
-<div class="fragment"><div class="line">build/&lt;preset&gt;/json-multi-param[.exe]</div>
-</div><!-- fragment --><ol type="1">
-<li>Run it directly from Visual Studio or from the command line.</li>
-</ol>
+<div class="fragment"><div class="line">build/&lt;preset&gt;/</div>
+</div><!-- fragment --><p>They can be launched directly from Visual Studio or from the command line.</p>
 <hr  />
 <h2><a class="anchor" id="autotoc_md13"></a>
 Windows (PowerShell/CLI)</h2>
@@ -169,40 +213,66 @@ Linux / WSL (Debian/Ubuntu based)</h2>
 <div class="line">cmake --preset debug</div>
 <div class="line">cmake --build --preset debug -j$(nproc)</div>
 <div class="line">ctest --preset debug</div>
-</div><!-- fragment --><p> The resulting binary will be located in: </p><div class="fragment"><div class="line">build/release/json-multi-param</div>
+</div><!-- fragment --><p> The resulting binary will be located in: </p><div class="fragment"><div class="line">build/&lt;preset&gt;/</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
 Docker (fully reproducible environment)</h2>
-<p>The project includes a Dockerfile that performs a clean build and runs tests automatically: </p><div class="fragment"><div class="line">docker build -t json-multi-param:local .</div>
-<div class="line">docker run --rm json-multi-param:local</div>
-</div><!-- fragment --><hr  />
+<p>The project includes a Dockerfile intended for CI / verification purposes.</p>
+<p>It performs:</p><ul>
+<li>A clean Release build</li>
+<li>Full unit test execution inside the container</li>
+</ul>
+<div class="fragment"><div class="line">docker build -t json-multi-param:local .</div>
+</div><!-- fragment --><p>This image is meant for build and test validation, not as a runtime distribution.</p>
+<hr  />
 <h1><a class="anchor" id="autotoc_md18"></a>
 🧪 Unit Tests</h1>
-<p>Unit tests are implemented using GoogleTest and fully integrated into the build system via CTest. Running a Debug build automatically enables all tests (BUILD_TESTING=ON).</p>
-<p>The test suite ensures the correctness and thread-safety of all major components in the project.</p>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<p>Unit tests are implemented using <b>GoogleTest</b> and fully integrated into the build system via <b>CTest</b>.</p>
+<p>All tests are automatically enabled when building with: </p><div class="fragment"><div class="line">BUILD_TESTING=ON</div>
+</div><!-- fragment --><p> The test suite validates the <b>functional correctness</b>, <b>type safety</b>, and <b>deterministic behavior</b> of the library.</p>
+<hr  />
+<h2><a class="anchor" id="autotoc_md20"></a>
 ✅ Covered Scenarios</h2>
-<p>Below is the list of all behaviors validated by the current test suite:</p>
-<h3><a class="anchor" id="autotoc_md20"></a>
-🧵 ACBACBACB</h3>
+<p>The following behaviors are fully covered by the current test suite:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Test Name   </th><th class="markdownTableHeadNone">Validates    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>ACBACB</b>   </td><td class="markdownTableBodyNone">acbacb   </td></tr>
+<td class="markdownTableBodyNone"><b>AddSetGetIntAndString</b>   </td><td class="markdownTableBodyNone">Basic parameter creation, typed set/get operations    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>IntMinMax</b>   </td><td class="markdownTableBodyNone">Integer min/max constraint enforcement    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>StringAllowedValues</b>   </td><td class="markdownTableBodyNone">String allowed-values constraint enforcement    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>JsonRoundTrip</b>   </td><td class="markdownTableBodyNone">JSON serialization and deserialization round-trip    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>JsonTypesAreTyped</b>   </td><td class="markdownTableBodyNone">JSON values are emitted using proper JSON types (bool, number, string)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>CompactStringIsDeterministic</b>   </td><td class="markdownTableBodyNone">Compact string output is deterministic and alphabetically ordered    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>CompactStringRoundTripWithEscapes</b>   </td><td class="markdownTableBodyNone">Robust handling of escaped <code>;</code>, <code>=</code> and <code>\</code> characters    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>GetOrReturnsFallbackWhenMissing</b>   </td><td class="markdownTableBodyNone">Safe fallback access for missing parameters    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>GetOrThrowsOnTypeMismatch</b>   </td><td class="markdownTableBodyNone">Strong runtime protection against type mismatches   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md21"></a>
-🧩 Behavioral Guarantees Provided by Tests</h3>
-<p>The test suite ensures:</p>
-<p>✔ ACBACB is safe</p><ul>
-<li>acbacb</li>
-<li>Correct shutdown semantics (shutdown() + shutdownNow())</li>
-<li>Robust to exceptions inside jobs</li>
-<li>No job is silently lost unless shutdownNow() is explicit</li>
-</ul>
+<hr  />
 <h2><a class="anchor" id="autotoc_md22"></a>
+🧩 Behavioral Guarantees Provided by Tests</h2>
+<p>The test suite guarantees that:</p>
+<p>✔ Parameter definitions are <b>strongly typed and validated</b> <br  />
+ ✔ All constraint violations are <b>detected and reported</b> <br  />
+ ✔ JSON and compact-string formats are <b>round-trip safe</b> <br  />
+ ✔ Compact-string serialization is <b>stable and deterministic</b> <br  />
+ ✔ Invalid input never silently corrupts internal state <br  />
+ ✔ Type mismatches are detected <b>early and explicitly</b></p>
+<p>These guarantees make the library suitable for use in <b>configuration handling</b>, <b>embedded systems</b>, and <b>communication protocols</b> where correctness and predictability are critical.</p>
+<h2><a class="anchor" id="autotoc_md23"></a>
 Running Tests (Windows)</h2>
-<p>On Windows, the project has been validated with Visual Studio 2022. Tests can be executed directly from Test Explorer: </p><div class="fragment"><div class="line">→ Test → Run All Tests</div>
-</div><!-- fragment --><p>Alternatively, you can also build and run tests using the provided CMake presets: </p><div class="fragment"><div class="line">cmake --preset debug</div>
+<p>On Windows, the project has been validated with <b>Visual Studio 2022</b>.</p>
+<p>Tests can be executed directly from <b>Test Explorer</b>:</p>
+<p><code>Menu → Test → Run All Tests</code></p>
+<p>Alternatively, using CMake presets:</p>
+<div class="fragment"><div class="line">cmake --preset debug</div>
 <div class="line">cmake --build --preset debug</div>
 <div class="line">ctest --preset debug --output-on-failure</div>
 </div><!-- fragment --> <blockquote class="doxtable">
@@ -212,71 +282,154 @@ Running Tests (Windows)</h2>
 </ol>
 </blockquote>
 <p>&gt;<code>bash &lt;blockquote&gt;&amp;zwj;winget install Ninja-build.Ninja &lt;/blockquote&gt;&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md24"></a>
 Running Tests (Linux / Docker)</h2>
-<p>After building the project, run the following command inside the build directory:</p>
+<p>After building the project:</p>
 <div class="fragment"><div class="line">cd build/debug</div>
 <div class="line">ctest --output-on-failure</div>
-</div><!-- fragment --><p>This will automatically discover and execute all registered GoogleTest cases.</p>
-<h2><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --><p>CTest automatically discovers and executes all GoogleTest cases.</p>
+<h2><a class="anchor" id="autotoc_md25"></a>
 Example output:</h2>
-<p>(example output inside container) </p><div class="fragment"></div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md26"></a>
+<div class="fragment"><div class="line">Test project C:/PROJECTS/json-multi-param/build/debug</div>
+<div class="line">    Start 1: ParamSetBasicFixture.AddSetGetIntAndString</div>
+<div class="line">1/9 Test #1: ParamSetBasicFixture.AddSetGetIntAndString ...............   Passed    0.01 sec</div>
+<div class="line">    Start 2: ParamSetBasicFixture.IntMinMax</div>
+<div class="line">2/9 Test #2: ParamSetBasicFixture.IntMinMax ...........................   Passed    0.01 sec</div>
+<div class="line">    Start 3: ParamSetBasicFixture.StringAllowedValues</div>
+<div class="line">3/9 Test #3: ParamSetBasicFixture.StringAllowedValues .................   Passed    0.01 sec</div>
+<div class="line">    Start 4: ParamSetBasicFixture.JsonRoundTrip</div>
+<div class="line">4/9 Test #4: ParamSetBasicFixture.JsonRoundTrip .......................   Passed    0.01 sec</div>
+<div class="line">    Start 5: ParamSetBasicFixture.JsonTypesAreTyped</div>
+<div class="line">5/9 Test #5: ParamSetBasicFixture.JsonTypesAreTyped ...................   Passed    0.01 sec</div>
+<div class="line">    Start 6: ParamSetBasicFixture.CompactStringIsDeterministic</div>
+<div class="line">6/9 Test #6: ParamSetBasicFixture.CompactStringIsDeterministic ........   Passed    0.01 sec</div>
+<div class="line">    Start 7: ParamSetBasicFixture.CompactStringRoundTripWithEscapes</div>
+<div class="line">7/9 Test #7: ParamSetBasicFixture.CompactStringRoundTripWithEscapes ...   Passed    0.01 sec</div>
+<div class="line">    Start 8: ParamSetBasicFixture.GetOrReturnsFallbackWhenMissing</div>
+<div class="line">8/9 Test #8: ParamSetBasicFixture.GetOrReturnsFallbackWhenMissing .....   Passed    0.01 sec</div>
+<div class="line">    Start 9: ParamSetBasicFixture.GetOrThrowsOnTypeMismatch</div>
+<div class="line">9/9 Test #9: ParamSetBasicFixture.GetOrThrowsOnTypeMismatch ...........   Passed    0.01 sec</div>
+<div class="line">100% tests passed, 0 tests failed out of 9</div>
+<div class="line">Total Test time (real) =   0.09 sec</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md27"></a>
 🐳 Docker</h1>
-<p>This project includes a Dockerfile to provide a reproducible build and test environment.</p>
-<p>Requires Docker installed and running on your system.</p>
+<p>This project includes a <b>multi-stage Dockerfile</b> that provides a fully reproducible build and test environment.</p>
+<p>Docker is required and must be installed and running on your system.</p>
 <p>Build image:</p>
-<div class="fragment"><div class="line">build -t json-multi-param:dev .</div>
-</div><!-- fragment --><p>Run tests inside container:</p>
-<div class="fragment"><div class="line">run --rm json-multi-param:dev</div>
-</div><!-- fragment --><p>Run main binary:</p>
-<div class="fragment"><div class="line">run --rm json-multi-param:dev ./build/release/json-multi-param</div>
+<div class="fragment"><div class="line">docker build -t json-multi-param:dev .</div>
+</div><!-- fragment --><p>Run tests inside the container</p>
+<p>All unit tests are executed automatically during the image build. You can also run the container explicitly:</p>
+<div class="fragment"><div class="line">docker run --rm json-multi-param:dev</div>
+</div><!-- fragment --><p>Run example binary</p>
+<p>The runtime image executes the device_config_example binary by default:</p>
+<div class="fragment"><div class="line">docker run --rm json-multi-param:dev</div>
 </div><!-- fragment --><p>By default, the container builds the project in /app/build/. The binary can be invoked as shown.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md28"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 🔄 Continuous Integration</h1>
-<p>This project provides two GitHub Actions workflows under .github/workflows/:</p>
-<h2><a class="anchor" id="autotoc_md29"></a>
-ci.yml</h2>
-<p>This workflow performs the following steps:</p><ul>
-<li>Builds the project on ubuntu-latest using CMake + Ninja and g++.</li>
-<li>Runs all unit tests using CTest (with detailed failure output).</li>
-<li>Builds the Docker image and verifies that it executes correctly inside a container.</li>
+<p>This project uses <b>GitHub Actions</b> to ensure build correctness and long-term stability. All workflows are defined under <code>.github/workflows/</code>.</p>
+<h2><a class="anchor" id="autotoc_md30"></a>
+&lt;tt&gt;ci.yml&lt;/tt&gt;</h2>
+<p>The main CI workflow performs the following steps:</p>
+<ul>
+<li>Builds the project on <b>ubuntu-latest</b> using <b>CMake + Ninja</b>.</li>
+<li>Runs the full unit test suite via <b>CTest</b> with detailed failure output.</li>
+<li>Builds the Docker image and verifies it executes correctly inside a container.</li>
 </ul>
-<p>✅ Ensures that:</p><ul>
+<p>✅ This ensures that:</p>
+<ul>
 <li>The codebase compiles cleanly on a fresh Linux environment.</li>
 <li>All unit tests pass consistently.</li>
-<li>The Docker image remains functional and up-to-date.</li>
+<li>The Docker image remains functional and reproducible.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md30"></a>
-docs.yml</h2>
-<p>This workflow automates documentation generation:</p><ul>
-<li>Installs Doxygen, Graphviz, and LaTeX.</li>
-<li>Generates both HTML and PDF documentation.</li>
-<li>Uploads the generated artifacts for download directly from the workflow summary.</li>
-<li>Deploys HTML docs to GitHub Pages when pushing to the main branch.</li>
+<h2><a class="anchor" id="autotoc_md31"></a>
+&lt;tt&gt;docs.yml&lt;/tt&gt;</h2>
+<p>This workflow automates API documentation generation using <b>Doxygen</b>:</p>
+<ul>
+<li>Installs Doxygen, Graphviz, and a LaTeX toolchain.</li>
+<li>Generates <b>HTML</b> and <b>PDF</b> documentation from source code comments.</li>
+<li>Uploads generated artifacts for direct download from the workflow summary.</li>
+<li>Deploys HTML documentation to <b>GitHub Pages</b> when pushing to the <code>main</code> branch.</li>
 </ul>
-<p>✅ Ensures that:</p><ul>
+<p>✅ This ensures that:</p>
+<ul>
 <li>Documentation is always in sync with the current source code.</li>
-<li>Both HTML and PDF outputs are built automatically.</li>
-<li>Public docs can be viewed directly from the project’s GitHub Pages site.</li>
+<li>Both HTML and PDF outputs are generated automatically.</li>
+<li>Public documentation can be accessed directly via GitHub Pages.</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md32"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 📂 Project Structure</h1>
-<div class="fragment"></div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md34"></a>
+<div class="fragment"><div class="line">json-multi-param/</div>
+<div class="line">├── .github/</div>
+<div class="line">│   └── workflows/</div>
+<div class="line">│       ├── ci.yml              # Continuous Integration (build + tests + Docker)</div>
+<div class="line">│       └── docs.yml            # Documentation generation (Doxygen)</div>
+<div class="line">│</div>
+<div class="line">├── include/                    # Public library headers</div>
+<div class="line">│   ├── constraints.h</div>
+<div class="line">│   ├── logger.h</div>
+<div class="line">│   ├── param_base.h</div>
+<div class="line">│   ├── param.h</div>
+<div class="line">│   ├── param_set.h</div>
+<div class="line">│   └── value_type_traits.h</div>
+<div class="line">│</div>
+<div class="line">├── src/                        # Library implementation</div>
+<div class="line">│   ├── logger.cpp</div>
+<div class="line">│   ├── param_base.cpp</div>
+<div class="line">│   └── param_set.cpp</div>
+<div class="line">│</div>
+<div class="line">├── examples/                   # Usage examples</div>
+<div class="line">│   └── device_config/</div>
+<div class="line">│       ├── device_config_protocol.h</div>
+<div class="line">│       └── device_config_example.cpp</div>
+<div class="line">│</div>
+<div class="line">├── tests/                      # Unit tests (GoogleTest)</div>
+<div class="line">│   └── test_param_set_basic.cpp</div>
+<div class="line">│</div>
+<div class="line">├── docs/                       # Documentation sources and outputs</div>
+<div class="line">│   ├── architecture_diagram.puml       # UML architecture diagram (PlantUML)</div>
+<div class="line">│   ├── architecture_diagram.png</div>
+<div class="line">│   ├── class_diagram.puml              # UML class diagram (PlantUML)</div>
+<div class="line">│   ├── class_diagram.png</div>
+<div class="line">│   ├── Doxyfile</div>
+<div class="line">│   └── README.md</div>
+<div class="line">│</div>
+<div class="line">├── scripts/                    # Helper scripts</div>
+<div class="line">│   ├── build.ps1</div>
+<div class="line">│   ├── build.sh</div>
+<div class="line">│   ├── generate_docs.ps1</div>
+<div class="line">│   └── generate_docs.sh</div>
+<div class="line">│</div>
+<div class="line">├── external/                   # Third-party dependencies (vendored)</div>
+<div class="line">│   └── nlohmann/</div>
+<div class="line">│       └── json.hpp</div>
+<div class="line">│</div>
+<div class="line">├── .clang-format               # Code style configuration</div>
+<div class="line">├── .dockerignore</div>
+<div class="line">├── .gitattributes</div>
+<div class="line">├── .gitignore</div>
+<div class="line">├── CMakeLists.txt</div>
+<div class="line">├── CMakePresets.json</div>
+<div class="line">├── Dockerfile</div>
+<div class="line">└── README.md</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md35"></a>
 📖 Documentation</h1>
-<p>This project uses <a href="https://www.doxygen.nl/">Doxygen</a> to generate API documentation from source code comments.</p>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<p>This project uses <b><a href="https://www.doxygen.nl/">Doxygen</a></b> to generate API documentation directly from source code comments.</p>
+<p>Documentation is generated using a single, centralized Doxygen configuration and can be built locally or via CI.</p>
+<h2><a class="anchor" id="autotoc_md36"></a>
 Generate documentation</h2>
-<h3><a class="anchor" id="autotoc_md36"></a>
+<h3><a class="anchor" id="autotoc_md37"></a>
 Windows (PowerShell)</h3>
 <div class="fragment"><div class="line">Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</div>
 <div class="line">.\scripts\generate_docs.ps1</div>
 </div><!-- fragment --><p> Generates HTML (docs/html/index.html) and LaTeX sources (docs/latex/).</p>
-<p>PDF (refman.pdf) is not generated on Windows unless you install a full LaTeX toolchain (MiKTeX/TeX Live + make).</p>
-<h3><a class="anchor" id="autotoc_md37"></a>
+<blockquote class="doxtable">
+<p>&zwj;⚠ PDF (refman.pdf) is not generated on Windows unless you install a full LaTeX toolchain (MiKTeX/TeX Live + make). </p>
+</blockquote>
+<h3><a class="anchor" id="autotoc_md38"></a>
 Linux / WSL (Debian/Ubuntu based)</h3>
 <div class="fragment"><div class="line">sudo apt update</div>
 <div class="line">sudo apt install -y doxygen graphviz texlive-latex-base texlive-fonts-recommended texlive-latex-extra make</div>
@@ -286,70 +439,70 @@ Linux / WSL (Debian/Ubuntu based)</h3>
 <p>Open in your browser: </p><div class="fragment"><div class="line">docs/html/index.html</div>
 </div><!-- fragment --><p>For more details, see docs/README.md</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md39"></a>
+<h1><a class="anchor" id="autotoc_md40"></a>
 🎨 Code Style (clang-format)</h1>
-<p>This project uses <b>clang-format</b> to enforce a consistent C++ code style. <br  />
- The formatting rules are defined in <a href="./.clang-format"><code>.clang-format</code></a>.</p>
-<h2><a class="anchor" id="autotoc_md40"></a>
+<p>This project uses <b>clang-format</b> to enforce a consistent and readable C++ code style. All formatting rules are defined in <a href="./.clang-format"><code>.clang-format</code></a>.</p>
+<h2><a class="anchor" id="autotoc_md41"></a>
 🔧 Chosen Style</h2>
-<p>The configuration is based on Google C++ Style, with a few modifications to improve readability for embedded and multithreaded systems:</p>
+<p>The configuration is based on the <b>Google C++ Style</b>, with selected adjustments to improve readability and maintainability in modern C++ projects:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Setting   </th><th class="markdownTableHeadNone">Value   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>BasedOnStyle</b>   </td><td class="markdownTableBodyNone"><code>Google</code>   </td><td class="markdownTableBodyNone">Provides a solid, modern baseline for C++ formatting.    </td></tr>
+<td class="markdownTableBodyNone"><b>BasedOnStyle</b>   </td><td class="markdownTableBodyNone"><code>Google</code>   </td><td class="markdownTableBodyNone">Provides a solid and widely adopted baseline.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Language</b>   </td><td class="markdownTableBodyNone"><code>Cpp</code>   </td><td class="markdownTableBodyNone">Ensures C++-specific syntax rules (not generic C).    </td></tr>
+<td class="markdownTableBodyNone"><b>Language</b>   </td><td class="markdownTableBodyNone"><code>Cpp</code>   </td><td class="markdownTableBodyNone">Ensures C++-specific formatting rules.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>IndentWidth / TabWidth</b>   </td><td class="markdownTableBodyNone"><code>4</code>   </td><td class="markdownTableBodyNone">Uses 4 spaces per indent (vs Google’s default 2) for improved block readability.    </td></tr>
+<td class="markdownTableBodyNone"><b>IndentWidth / TabWidth</b>   </td><td class="markdownTableBodyNone"><code>4</code>   </td><td class="markdownTableBodyNone">Uses 4 spaces per indent for improved block readability.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>UseTab</b>   </td><td class="markdownTableBodyNone"><code>Never</code>   </td><td class="markdownTableBodyNone">Enforces spaces only (consistent across editors).    </td></tr>
+<td class="markdownTableBodyNone"><b>UseTab</b>   </td><td class="markdownTableBodyNone"><code>Never</code>   </td><td class="markdownTableBodyNone">Enforces spaces only, ensuring editor consistency.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>ColumnLimit</b>   </td><td class="markdownTableBodyNone"><code>100</code>   </td><td class="markdownTableBodyNone">Balances readability and long template expressions.    </td></tr>
+<td class="markdownTableBodyNone"><b>ColumnLimit</b>   </td><td class="markdownTableBodyNone"><code>100</code>   </td><td class="markdownTableBodyNone">Balances readability with long expressions and templates.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>BreakBeforeBraces</b>   </td><td class="markdownTableBodyNone"><code>Allman</code>   </td><td class="markdownTableBodyNone">Places braces on their own line, improving visual structure in nested code.    </td></tr>
+<td class="markdownTableBodyNone"><b>BreakBeforeBraces</b>   </td><td class="markdownTableBodyNone"><code>Allman</code>   </td><td class="markdownTableBodyNone">Places braces on their own line, improving visual structure.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>AllowShortIfStatementsOnASingleLine</b>   </td><td class="markdownTableBodyNone"><code>false</code>   </td><td class="markdownTableBodyNone">Forces explicit line breaks for clarity.    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>AllowShortLoopsOnASingleLine</b>   </td><td class="markdownTableBodyNone"><code>false</code>   </td><td class="markdownTableBodyNone">Prevents compact loop bodies from being overlooked.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>AllowShortFunctionsOnASingleLine</b>   </td><td class="markdownTableBodyNone"><code>Inline</code>   </td><td class="markdownTableBodyNone">Allows concise inline functions on a single line only.    </td></tr>
+<td class="markdownTableBodyNone"><b>AllowShortFunctionsOnASingleLine</b>   </td><td class="markdownTableBodyNone"><code>Inline</code>   </td><td class="markdownTableBodyNone">Allows concise inline functions only.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>PointerAlignment</b>   </td><td class="markdownTableBodyNone"><code>Left</code>   </td><td class="markdownTableBodyNone">Keeps <code>T* ptr</code> instead of <code>T *ptr</code> — cleaner and more conventional in C++.    </td></tr>
+<td class="markdownTableBodyNone"><b>PointerAlignment</b>   </td><td class="markdownTableBodyNone"><code>Left</code>   </td><td class="markdownTableBodyNone">Uses <code>T* ptr</code> instead of <code>T *ptr</code>.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>DerivePointerAlignment</b>   </td><td class="markdownTableBodyNone"><code>false</code>   </td><td class="markdownTableBodyNone">Disables automatic guessing; enforces explicit <code>PointerAlignment</code>.    </td></tr>
+<td class="markdownTableBodyNone"><b>DerivePointerAlignment</b>   </td><td class="markdownTableBodyNone"><code>false</code>   </td><td class="markdownTableBodyNone">Enforces explicit pointer alignment.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>SpaceBeforeParens</b>   </td><td class="markdownTableBodyNone"><code>ControlStatements</code>   </td><td class="markdownTableBodyNone">Adds a space in <code>if (</code> / <code>while (</code> for readability, not for calls.    </td></tr>
+<td class="markdownTableBodyNone"><b>SpaceBeforeParens</b>   </td><td class="markdownTableBodyNone"><code>ControlStatements</code>   </td><td class="markdownTableBodyNone">Adds space in <code>if (</code> / <code>while (</code> for readability.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>SortIncludes</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Automatically organizes include directives alphabetically.    </td></tr>
+<td class="markdownTableBodyNone"><b>SortIncludes</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Automatically sorts include directives.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>IncludeBlocks</b>   </td><td class="markdownTableBodyNone"><code>Regroup</code>   </td><td class="markdownTableBodyNone">Groups and reorders includes logically within the file.    </td></tr>
+<td class="markdownTableBodyNone"><b>IncludeBlocks</b>   </td><td class="markdownTableBodyNone"><code>Regroup</code>   </td><td class="markdownTableBodyNone">Groups and reorders includes logically.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>AlignConsecutiveAssignments</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Improves alignment of variable assignments.    </td></tr>
+<td class="markdownTableBodyNone"><b>AlignConsecutiveAssignments</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Improves alignment of assignments.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>AlignConsecutiveDeclarations</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Aligns consecutive variable declarations.    </td></tr>
+<td class="markdownTableBodyNone"><b>AlignConsecutiveDeclarations</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Aligns consecutive declarations.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>AlignOperands</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Keeps arithmetic/logical expressions neatly aligned.    </td></tr>
+<td class="markdownTableBodyNone"><b>AlignOperands</b>   </td><td class="markdownTableBodyNone"><code>true</code>   </td><td class="markdownTableBodyNone">Keeps expressions neatly aligned.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>CommentPragmas</b>   </td><td class="markdownTableBodyNone">&lsquo;&rsquo;^!'<code>\ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt; Allows pragma-specific comment formatting. \ilinebr &lt;/td&gt; &lt;/tr&gt; &lt;tr class="markdownTableRowOdd"&gt; &lt;td class="markdownTableBodyNone"&gt; **FixNamespaceComments** \ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt;</code>true<code>\ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt; Automatically adds trailing</code>// namespace X<code>comments when closing. \ilinebr &lt;/td&gt; &lt;/tr&gt; &lt;tr class="markdownTableRowEven"&gt; &lt;td class="markdownTableBodyNone"&gt; **SpacesBeforeTrailingComments** \ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt;</code>2<code>\ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt; Keeps a consistent gap before end-of-line comments. \ilinebr &lt;/td&gt; &lt;/tr&gt; &lt;tr class="markdownTableRowOdd"&gt; &lt;td class="markdownTableBodyNone"&gt; **KeepEmptyLinesAtTheStartOfBlocks** \ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt;</code>false`   </td><td class="markdownTableBodyNone">Avoids unnecessary blank lines at block starts.   </td></tr>
+<td class="markdownTableBodyNone"><b>CommentPragmas</b>   </td><td class="markdownTableBodyNone">&lsquo;&rsquo;^!'<code>\ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt; Preserves pragma-style comments. \ilinebr &lt;/td&gt; &lt;/tr&gt; &lt;tr class="markdownTableRowOdd"&gt; &lt;td class="markdownTableBodyNone"&gt; **FixNamespaceComments** \ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt;</code>true<code>\ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt; Ensures closing namespace comments are present. \ilinebr &lt;/td&gt; &lt;/tr&gt; &lt;tr class="markdownTableRowEven"&gt; &lt;td class="markdownTableBodyNone"&gt; **SpacesBeforeTrailingComments** \ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt;</code>2<code>\ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt; Enforces consistent spacing before comments. \ilinebr &lt;/td&gt; &lt;/tr&gt; &lt;tr class="markdownTableRowOdd"&gt; &lt;td class="markdownTableBodyNone"&gt; **KeepEmptyLinesAtTheStartOfBlocks** \ilinebr &lt;/td&gt; &lt;td class="markdownTableBodyNone"&gt;</code>false`   </td><td class="markdownTableBodyNone">Avoids unnecessary blank lines.   </td></tr>
 </table>
 <hr  />
-<h2><a class="anchor" id="autotoc_md42"></a>
-Windows (Visual Studio Code / PowerShell)</h2>
+<h2><a class="anchor" id="autotoc_md43"></a>
+Windows (PowerShell)</h2>
 <ol type="1">
-<li>Install LLVM (includes clang-format):<ul>
-<li>Download the LLVM installer for Windows (<code><a href="https://github.com/llvm/llvm-project/releases">https://github.com/llvm/llvm-project/releases</a></code>)</li>
-<li>During setup, check “Add LLVM to the system PATH”.</li>
+<li>Install LLVM (includes <code>clang-format</code>):<ul>
+<li>Download from: <br  />
+ <a href="https://github.com/llvm/llvm-project/releases">https://github.com/llvm/llvm-project/releases</a></li>
+<li>During installation, enable <b>“Add LLVM to PATH”</b>.</li>
 </ul>
 </li>
 <li>Verify installation:</li>
 </ol>
 <div class="fragment"><div class="line">clang-format --version</div>
 </div><!-- fragment --><ol type="1">
-<li>Format all project files: <div class="fragment"><div class="line">clang-format -i include\*.h include\*.ipp src\*.cpp tests\*.cpp</div>
+<li>Format source files (example): <div class="fragment"><div class="line">clang-format -i include/**/*.h src/**/*.cpp tests/**/*.cpp examples/**/*.cpp</div>
 </div><!-- fragment --> </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<h2><a class="anchor" id="autotoc_md44"></a>
 Linux / WSL (Debian/Ubuntu based)</h2>
 <ol type="1">
 <li>Install clang-format: <div class="fragment"><div class="line">sudo apt update</div>
@@ -357,33 +510,45 @@ Linux / WSL (Debian/Ubuntu based)</h2>
 </div><!-- fragment --></li>
 <li>Verify installation: <div class="fragment"><div class="line">clang-format --version</div>
 </div><!-- fragment --></li>
-<li>Format all project files: <div class="fragment"><div class="line">clang-format -i include/*.h include/*.ipp src/*.cpp tests/*.cpp</div>
+<li>Format all project files: <div class="fragment"><div class="line">clang-format -i include/**/*.h src/**/*.cpp tests/**/*.cpp examples/**/*.cpp</div>
 </div><!-- fragment --></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md45"></a>
+<h1><a class="anchor" id="autotoc_md46"></a>
 📌 Notes</h1>
 <ul>
-<li><b>C++ Standard</b>: The project uses <b>C++14</b>, configured via <code>set(CMAKE_CXX_STANDARD 14)</code> ensuring maximum compatibility with embedded systems, legacy compilers, and cross-platform builds.</li>
-<li><p class="startli"><b>Logging</b>:</p>
-<p class="startli">A fully centralized, thread-safe <a class="el" href="db/d67/classLogger.html" title="Static thread-safe console logger with configurable severity filtering.">Logger</a> utility is used throughout the project. It provides:</p><ul>
-<li>Atomic writes to avoid interleaved logs</li>
-<li>Timestamps with millisecond precision</li>
-<li>Configurable severity levels (DEBUG, INFO, WARN, ERROR)</li>
-<li>Uniform log formatting across all components (ThreadPool, JobQueue, Jobs, main application)</li>
+<li><p class="startli"><b>C++ Standard</b></p>
+<p class="startli">The project is implemented using <b>C++14</b>, configured via <br  />
+ <code>set(CMAKE_CXX_STANDARD 14)</code>.</p>
+<p class="startli">This choice ensures broad compatibility with:</p><ul>
+<li>Conservative toolchains</li>
+<li>Long-term support compilers</li>
+<li>Embedded and cross-platform environments</li>
 </ul>
+</li>
+<li><p class="startli"><b>Logging</b></p>
+<p class="startli">A centralized logging utility is used across the project to provide:</p><ul>
+<li>Consistent log formatting</li>
+<li>Timestamped messages with millisecond precision</li>
+<li>Severity levels (<code>DEBUG</code>, <code>INFO</code>, <code>WARN</code>, <code>ERROR</code>)</li>
+</ul>
+<p class="startli">The logger implementation prevents interleaved output and can be safely reused in multi-threaded contexts if required by integrating applications.</p>
 </li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md47"></a>
+<h1><a class="anchor" id="autotoc_md48"></a>
 ❤️ Acknowledgements</h1>
+<ul>
+<li><a href="https://github.com/nlohmann/json">nlohmann/json</a> <br  />
+ For providing a robust, modern, and widely adopted JSON library. </li>
+</ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 19 2026 14:34:09 for json-multi-param by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Mon Jan 26 2026 10:58:10 for json-multi-param by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

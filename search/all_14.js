@@ -13,6 +13,5 @@ var searchData=
   ['valuetypeof_3c_20int_20_3e_10',['ValueTypeOf&lt; int &gt;',['../dd/dc3/structjsonmp_1_1ValueTypeOf_3_01int_01_4.html',1,'jsonmp']]],
   ['valuetypeof_3c_20std_3a_3astring_20_3e_11',['ValueTypeOf&lt; std::string &gt;',['../d6/d57/structjsonmp_1_1ValueTypeOf_3_01std_1_1string_01_4.html',1,'jsonmp']]],
   ['valuetypeof_3c_20unsigned_20int_20_3e_12',['ValueTypeOf&lt; unsigned int &gt;',['../d3/d39/structjsonmp_1_1ValueTypeOf_3_01unsigned_01int_01_4.html',1,'jsonmp']]],
-  ['visual_20studio_202022_13',['Windows (Visual Studio 2022)',['../index.html#autotoc_md11',1,'']]],
-  ['visual_20studio_20code_20powershell_14',['Windows (Visual Studio Code / PowerShell)',['../index.html#autotoc_md42',1,'']]]
+  ['visual_20studio_202022_13',['Windows (Visual Studio 2022)',['../index.html#autotoc_md11',1,'']]]
 ];

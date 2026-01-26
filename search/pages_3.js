@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['param_0',['JSON multi param',['../index.html',1,'']]]
+  ['param_0',['JSON Multi-Param',['../index.html',1,'']]]
 ];
