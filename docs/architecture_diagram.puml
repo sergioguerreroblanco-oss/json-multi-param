@@ -1,0 +1,105 @@
+@startuml
+title json-multi-param - Architecture / Data Flow
+skinparam shadowing false
+skinparam ActivityBackgroundColor white
+skinparam ActivityBorderColor black
+skinparam ArrowColor black
+
+start
+
+:Client code creates ParamSet;
+:Client defines parameters
+(addInt/addDouble/addString/addBool or add<T>);
+note right
+Each parameter is registered by name.
+ParamSet owns them (unique_ptr<ParamBase>).
+end note
+
+partition "Set / Get" {
+  :Client calls set<T>(name, value, error);
+  if (Name exists?) then (yes)
+    if (Type matches?) then (yes)
+      :Param<T>::set(value, error);
+      :validate_constraints(constraints, value, error);
+      if (Valid?) then (yes)
+        :Store new value;
+      else (no)
+        :Return false + error;
+      endif
+    else (no)
+      :Return false + type mismatch;
+    endif
+  else (no)
+    :Return false + unknown parameter;
+  endif
+}
+
+partition "Serialize to JSON" {
+  :Client calls to_json();
+  :Iterate params (deterministic order);
+  :For each ParamBase:
+  call ParamBase::getType();
+  :Convert value to native JSON type
+(bool/number/string);
+  :Build JSON object;
+  :Return json;
+}
+
+partition "Deserialize from JSON" {
+  :Client calls from_json(json, error);
+  if (Input is JSON object?) then (yes)
+    :Iterate JSON keys;
+    if (Key exists in ParamSet?) then (yes)
+      :Convert JSON value to string representation;
+      :ParamBase::from_string(repr, error);
+      :Param<T>::from_string -> set -> validate_constraints;
+      if (OK?) then (yes)
+        :Continue;
+      else (no)
+        :Return false + error;
+        stop
+      endif
+    else (no)
+      :Return false + unknown parameter;
+      stop
+    endif
+    :Return true;
+  else (no)
+    :Return false + error;
+  endif
+}
+
+partition "Serialize to Compact String" {
+  :Client calls to_compact_string();
+  :Iterate param names (sorted);
+  :For each param:
+  :value = ParamBase::to_string();
+  :Escape value (\\ ; =);
+  :Append "name=value" tokens separated by ';';
+  :Return string;
+}
+
+partition "Deserialize from Compact String" {
+  :Client calls from_compact_string(s, error);
+  :Split by ';' while honoring escapes;
+  :For each token:
+  :Split into name/value at first unescaped '=';
+  if (Name exists?) then (yes)
+    :Unescape value;
+    :ParamBase::from_string(value, error);
+    :Param<T>::from_string -> set -> validate_constraints;
+    if (OK?) then (yes)
+      :Continue;
+    else (no)
+      :Return false + error;
+      stop
+    endif
+  else (no)
+    :Return false + unknown parameter;
+    stop
+  endif
+  :Return true;
+}
+
+stop
+@enduml

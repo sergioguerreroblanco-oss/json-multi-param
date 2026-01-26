@@ -1,4 +1,4 @@
-# JSON multi param
+# JSON Multi-Param
 
 ![CI](https://github.com/sergioguerreroblanco-oss/json-multi-param/actions/workflows/ci.yml/badge.svg)
 
@@ -7,35 +7,62 @@
 
 ## ✨ Core Features
 
-- **acbacbacfb**
-  - acbacb.
-  - acbacb.
-  - acbacb.
+- **Strongly-typed parameters**
+  - Define configuration parameters with explicit C++ types (`int`, `double`, `bool`, `std::string`).
+  - Type-safe access through templated `set<T>()` / `get<T>()` APIs.
+
+- **Constraint-based validation**
+  - Numeric constraints: minimum / maximum values.
+  - String constraints: length limits and allowed value sets.
+  - Validation enforced on every assignment and deserialization.
+
+- **Deterministic serialization**
+  - Stable, deterministic ordering of parameters for reproducible outputs.
+  - Suitable for logging, testing, and communication protocols.
+
+- **Multiple serialization formats**
+  - **Typed JSON** serialization using `nlohmann::json`.
+  - **Compact string format** (`key=value;key=value;...`) designed for embedded or bus-based systems.
+
+- **Robust parsing**
+  - Strict deserialization: unknown parameters and type mismatches are rejected.
+  - Escape-safe compact format supporting special characters (`;`, `=`, `\`).
 
 ---
-
 ## 🌟 Project Highlights
 
-- **acbacb**
-  - acbacb.
+- **Designed for embedded and modular systems**
+  - Explicit parameter schemas shared across modules.
+  - Strict parsing model to prevent silent configuration drift.
+
+- **Clear separation of concerns**
+  - Parameter definition, validation, and serialization are cleanly separated.
+  - No dependency on application-specific logic.
+
+- **Modern C++ design**
+  - C++14-compliant, header-only traits and templated APIs.
+  - RAII-friendly and exception-aware error handling.
+
+- **Test-driven development**
+  - Comprehensive unit tests covering validation, serialization, and edge cases.
+  - Deterministic outputs validated through automated tests.
+
+- **CI-ready**
+  - Linux build and test pipeline using CMake, Ninja, and Docker.
+  - Reproducible builds validated in continuous integration.
+
 
 ---
 
-## 🏗 Architecture
+## 🏗 Data flow / Serialization flow
 
-The following diagram illustrates the internal architecture of the project:
-
-```mermaid
-flowchart LR
-```
+![Data flow / Serialization flow](docs/architecture_diagram.png)
 
 ---
 
-## 🗂 Class Diagram
+## 🗂 Class model
 
-```mermaid
-classDiagram
-```
+![Class model](docs/class_diagram.png)
 
 ---
 
@@ -51,19 +78,27 @@ classDiagram
 
 4. In the toolbar, select a configuration:
 
-    - debug → includes unit tests (BUILD_TESTING=ON).
+    - debug → includes unit tests (BUILD_TESTING=ON)
 
-    - release → optimized build.
+    - release → optimized build
 
 5. Build the project (Ctrl + Shift + B).
 
-6. The executable will be generated at:
+6. The build produces:
 
-```bash
-build/<preset>/json-multi-param[.exe]
+    - A static library: json_multi_param
+
+    - Example executables (e.g. device_config_example.exe)
+
+    - Unit tests executable (tests.exe, debug only)
+
+7. Executables are generated under:
+
+```
+build/<preset>/
 ```
 
-7. Run it directly from Visual Studio or from the command line.
+They can be launched directly from Visual Studio or from the command line.
 
 ---
 
@@ -101,52 +136,79 @@ ctest --preset debug
 ```
 The resulting binary will be located in:
 ```
-build/release/json-multi-param
+build/<preset>/
 ```
 
 ### Docker (fully reproducible environment)
-The project includes a Dockerfile that performs a clean build and runs tests automatically:
+The project includes a Dockerfile intended for CI / verification purposes.
+
+It performs:
+ - A clean Release build
+ - Full unit test execution inside the container
+
 ```bash
 docker build -t json-multi-param:local .
-docker run --rm json-multi-param:local
 ```
+
+This image is meant for build and test validation, not as a runtime distribution.
 
 ---
 
 ## 🧪 Unit Tests
 
-Unit tests are implemented using GoogleTest and fully integrated into the build system via CTest.
-Running a Debug build automatically enables all tests (BUILD_TESTING=ON).
+Unit tests are implemented using **GoogleTest** and fully integrated into the build system via **CTest**.
 
-The test suite ensures the correctness and thread-safety of all major components in the project.
+All tests are automatically enabled when building with:
+```
+BUILD_TESTING=ON
+```
+The test suite validates the **functional correctness**, **type safety**, and **deterministic behavior** of the library.
+
+---
 
 ### ✅ Covered Scenarios
 
-Below is the list of all behaviors validated by the current test suite:
+The following behaviors are fully covered by the current test suite:
 
-#### 🧵 ACBACBACB
+| Test Name                                     | Validates                                                                 |
+|----------------------------------------------|---------------------------------------------------------------------------|
+| **AddSetGetIntAndString**                     | Basic parameter creation, typed set/get operations                        |
+| **IntMinMax**                                | Integer min/max constraint enforcement                                    |
+| **StringAllowedValues**                      | String allowed-values constraint enforcement                               |
+| **JsonRoundTrip**                            | JSON serialization and deserialization round-trip                          |
+| **JsonTypesAreTyped**                        | JSON values are emitted using proper JSON types (bool, number, string)    |
+| **CompactStringIsDeterministic**              | Compact string output is deterministic and alphabetically ordered          |
+| **CompactStringRoundTripWithEscapes**         | Robust handling of escaped `;`, `=` and `\` characters                     |
+| **GetOrReturnsFallbackWhenMissing**           | Safe fallback access for missing parameters                                |
+| **GetOrThrowsOnTypeMismatch**                 | Strong runtime protection against type mismatches                          |
 
-| Test Name                               | Validates                                                                                                  |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **ACBACB**        | acbacb                                                             |
+---
 
-#### 🧩 Behavioral Guarantees Provided by Tests
+### 🧩 Behavioral Guarantees Provided by Tests
 
-The test suite ensures:
+The test suite guarantees that:
 
-✔ ACBACB is safe
-- acbacb
-- Correct shutdown semantics (shutdown() + shutdownNow())
-- Robust to exceptions inside jobs
-- No job is silently lost unless shutdownNow() is explicit
+✔ Parameter definitions are **strongly typed and validated**  
+✔ All constraint violations are **detected and reported**  
+✔ JSON and compact-string formats are **round-trip safe**  
+✔ Compact-string serialization is **stable and deterministic**  
+✔ Invalid input never silently corrupts internal state  
+✔ Type mismatches are detected **early and explicitly**
+
+These guarantees make the library suitable for use in
+**configuration handling**, **embedded systems**, and **communication protocols**
+where correctness and predictability are critical.
 
 ### Running Tests (Windows)
 
-On Windows, the project has been validated with Visual Studio 2022.
-Tests can be executed directly from Test Explorer:
-```Menu → Test → Run All Tests```
+On Windows, the project has been validated with **Visual Studio 2022**.
 
-Alternatively, you can also build and run tests using the provided CMake presets:
+Tests can be executed directly from **Test Explorer**:
+
+`Menu → Test → Run All Tests`
+
+Alternatively, using CMake presets:
+
 ```powershell
 cmake --preset debug
 cmake --build --preset debug
@@ -161,88 +223,179 @@ ctest --preset debug --output-on-failure
 
 ### Running Tests (Linux / Docker)
 
-After building the project, run the following command inside the build directory:
+After building the project:
 
 ```bash
 cd build/debug
 ctest --output-on-failure
 ```
 
-This will automatically discover and execute all registered GoogleTest cases.
+CTest automatically discovers and executes all GoogleTest cases.
 
 ### Example output:
-(example output inside container) 
 ```
-
+Test project C:/PROJECTS/json-multi-param/build/debug
+    Start 1: ParamSetBasicFixture.AddSetGetIntAndString
+1/9 Test #1: ParamSetBasicFixture.AddSetGetIntAndString ...............   Passed    0.01 sec
+    Start 2: ParamSetBasicFixture.IntMinMax
+2/9 Test #2: ParamSetBasicFixture.IntMinMax ...........................   Passed    0.01 sec
+    Start 3: ParamSetBasicFixture.StringAllowedValues
+3/9 Test #3: ParamSetBasicFixture.StringAllowedValues .................   Passed    0.01 sec
+    Start 4: ParamSetBasicFixture.JsonRoundTrip
+4/9 Test #4: ParamSetBasicFixture.JsonRoundTrip .......................   Passed    0.01 sec
+    Start 5: ParamSetBasicFixture.JsonTypesAreTyped
+5/9 Test #5: ParamSetBasicFixture.JsonTypesAreTyped ...................   Passed    0.01 sec
+    Start 6: ParamSetBasicFixture.CompactStringIsDeterministic
+6/9 Test #6: ParamSetBasicFixture.CompactStringIsDeterministic ........   Passed    0.01 sec
+    Start 7: ParamSetBasicFixture.CompactStringRoundTripWithEscapes
+7/9 Test #7: ParamSetBasicFixture.CompactStringRoundTripWithEscapes ...   Passed    0.01 sec
+    Start 8: ParamSetBasicFixture.GetOrReturnsFallbackWhenMissing
+8/9 Test #8: ParamSetBasicFixture.GetOrReturnsFallbackWhenMissing .....   Passed    0.01 sec
+    Start 9: ParamSetBasicFixture.GetOrThrowsOnTypeMismatch
+9/9 Test #9: ParamSetBasicFixture.GetOrThrowsOnTypeMismatch ...........   Passed    0.01 sec
+100% tests passed, 0 tests failed out of 9
+Total Test time (real) =   0.09 sec
 ```
 
 ---
 
 ## 🐳 Docker
 
-This project includes a Dockerfile to provide a reproducible build and test environment.
+This project includes a **multi-stage Dockerfile** that provides a fully reproducible
+build and test environment.
 
-Requires Docker installed and running on your system.
+Docker is required and must be installed and running on your system.
 
 Build image:
 
-```docker build -t json-multi-param:dev .```
+```
+docker build -t json-multi-param:dev .
+```
 
-Run tests inside container:
+Run tests inside the container
 
-```docker run --rm json-multi-param:dev```
+All unit tests are executed automatically during the image build.
+You can also run the container explicitly:
 
-Run main binary:
+```
+docker run --rm json-multi-param:dev
+```
 
-```docker run --rm json-multi-param:dev ./build/release/json-multi-param```
+Run example binary
+
+The runtime image executes the device_config_example binary by default:
+
+```
+docker run --rm json-multi-param:dev
+```
 
 By default, the container builds the project in /app/build/. The binary can be invoked as shown.
-
 
 ---
 
 ## 🔄 Continuous Integration
 
-This project provides two GitHub Actions workflows under .github/workflows/:
+This project uses **GitHub Actions** to ensure build correctness and long-term stability.
+All workflows are defined under `.github/workflows/`.
 
-### ci.yml
-This workflow performs the following steps:
-- Builds the project on ubuntu-latest using CMake + Ninja and g++.
-- Runs all unit tests using CTest (with detailed failure output).
-- Builds the Docker image and verifies that it executes correctly inside a container.
+### `ci.yml`
 
-✅ Ensures that:
+The main CI workflow performs the following steps:
+
+- Builds the project on **ubuntu-latest** using **CMake + Ninja**.
+- Runs the full unit test suite via **CTest** with detailed failure output.
+- Builds the Docker image and verifies it executes correctly inside a container.
+
+✅ This ensures that:
+
 - The codebase compiles cleanly on a fresh Linux environment.
 - All unit tests pass consistently.
-- The Docker image remains functional and up-to-date.
+- The Docker image remains functional and reproducible.
 
-### docs.yml
+### `docs.yml`
 
-This workflow automates documentation generation:
-- Installs Doxygen, Graphviz, and LaTeX.
-- Generates both HTML and PDF documentation.
-- Uploads the generated artifacts for download directly from the workflow summary.
-- Deploys HTML docs to GitHub Pages when pushing to the main branch.
+This workflow automates API documentation generation using **Doxygen**:
 
-✅ Ensures that:
+- Installs Doxygen, Graphviz, and a LaTeX toolchain.
+- Generates **HTML** and **PDF** documentation from source code comments.
+- Uploads generated artifacts for direct download from the workflow summary.
+- Deploys HTML documentation to **GitHub Pages** when pushing to the `main` branch.
+
+✅ This ensures that:
+
 - Documentation is always in sync with the current source code.
-- Both HTML and PDF outputs are built automatically.
-- Public docs can be viewed directly from the project’s GitHub Pages site.
+- Both HTML and PDF outputs are generated automatically.
+- Public documentation can be accessed directly via GitHub Pages.
 
 ---
 
 ## 📂 Project Structure
 
 ```
-
+json-multi-param/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml              # Continuous Integration (build + tests + Docker)
+│       └── docs.yml            # Documentation generation (Doxygen)
+│
+├── include/                    # Public library headers
+│   ├── constraints.h
+│   ├── logger.h
+│   ├── param_base.h
+│   ├── param.h
+│   ├── param_set.h
+│   └── value_type_traits.h
+│
+├── src/                        # Library implementation
+│   ├── logger.cpp
+│   ├── param_base.cpp
+│   └── param_set.cpp
+│
+├── examples/                   # Usage examples
+│   └── device_config/
+│       ├── device_config_protocol.h
+│       └── device_config_example.cpp
+│
+├── tests/                      # Unit tests (GoogleTest)
+│   └── test_param_set_basic.cpp
+│
+├── docs/                       # Documentation sources and outputs
+│   ├── architecture_diagram.puml       # UML architecture diagram (PlantUML)
+│   ├── architecture_diagram.png
+│   ├── class_diagram.puml              # UML class diagram (PlantUML)
+│   ├── class_diagram.png
+│   ├── Doxyfile
+│   └── README.md
+│
+├── scripts/                    # Helper scripts
+│   ├── build.ps1
+│   ├── build.sh
+│   ├── generate_docs.ps1
+│   └── generate_docs.sh
+│
+├── external/                   # Third-party dependencies (vendored)
+│   └── nlohmann/
+│       └── json.hpp
+│
+├── .clang-format               # Code style configuration
+├── .dockerignore
+├── .gitattributes
+├── .gitignore
+├── CMakeLists.txt
+├── CMakePresets.json
+├── Dockerfile
+└── README.md
 ```
 
 ---
 
 ## 📖 Documentation
 
-This project uses [Doxygen](https://www.doxygen.nl/) to generate API documentation
+This project uses **[Doxygen](https://www.doxygen.nl/)** to generate API documentation directly
 from source code comments.
+
+Documentation is generated using a single, centralized Doxygen configuration
+and can be built locally or via CI.
 
 ### Generate documentation
 
@@ -253,7 +406,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 Generates HTML (docs/html/index.html) and LaTeX sources (docs/latex/).
 
-PDF (refman.pdf) is not generated on Windows unless you install a full LaTeX toolchain (MiKTeX/TeX Live + make).
+> ⚠ PDF (refman.pdf) is not generated on Windows unless you install a full LaTeX toolchain (MiKTeX/TeX Live + make).
 
 #### Linux / WSL (Debian/Ubuntu based)
 ```bash
@@ -275,55 +428,56 @@ For more details, see docs/README.md
 
 ## 🎨 Code Style (clang-format)
 
-This project uses **clang-format** to enforce a consistent C++ code style.  
-The formatting rules are defined in [`.clang-format`](./.clang-format). 
+This project uses **clang-format** to enforce a consistent and readable C++ code style.
+All formatting rules are defined in [`.clang-format`](./.clang-format).
 
 ### 🔧 Chosen Style
 
-The configuration is based on Google C++ Style, with a few modifications to improve readability for embedded and multithreaded systems:
+The configuration is based on the **Google C++ Style**, with selected adjustments to
+improve readability and maintainability in modern C++ projects:
 
-| Setting                                 | Value               | Description                                                                      |
-| --------------------------------------- | ------------------- | -------------------------------------------------------------------------------- |
-| **BasedOnStyle**                        | `Google`            | Provides a solid, modern baseline for C++ formatting.                            |
-| **Language**                            | `Cpp`               | Ensures C++-specific syntax rules (not generic C).                               |
-| **IndentWidth / TabWidth**              | `4`                 | Uses 4 spaces per indent (vs Google’s default 2) for improved block readability. |
-| **UseTab**                              | `Never`             | Enforces spaces only (consistent across editors).                                |
-| **ColumnLimit**                         | `100`               | Balances readability and long template expressions.                              |
-| **BreakBeforeBraces**                   | `Allman`            | Places braces on their own line, improving visual structure in nested code.      |
-| **AllowShortIfStatementsOnASingleLine** | `false`             | Forces explicit line breaks for clarity.                                         |
-| **AllowShortLoopsOnASingleLine**        | `false`             | Prevents compact loop bodies from being overlooked.                              |
-| **AllowShortFunctionsOnASingleLine**    | `Inline`            | Allows concise inline functions on a single line only.                           |
-| **PointerAlignment**                    | `Left`              | Keeps `T* ptr` instead of `T *ptr` — cleaner and more conventional in C++.       |
-| **DerivePointerAlignment**              | `false`             | Disables automatic guessing; enforces explicit `PointerAlignment`.               |
-| **SpaceBeforeParens**                   | `ControlStatements` | Adds a space in `if (` / `while (` for readability, not for calls.               |
-| **SortIncludes**                        | `true`              | Automatically organizes include directives alphabetically.                       |
-| **IncludeBlocks**                       | `Regroup`           | Groups and reorders includes logically within the file.                          |
-| **AlignConsecutiveAssignments**         | `true`              | Improves alignment of variable assignments.                                      |
-| **AlignConsecutiveDeclarations**        | `true`              | Aligns consecutive variable declarations.                                        |
-| **AlignOperands**                       | `true`              | Keeps arithmetic/logical expressions neatly aligned.                             |
-| **CommentPragmas**                      | `'^!'`              | Allows pragma-specific comment formatting.                                       |
-| **FixNamespaceComments**                | `true`              | Automatically adds trailing `// namespace X` comments when closing.              |
-| **SpacesBeforeTrailingComments**        | `2`                 | Keeps a consistent gap before end-of-line comments.                              |
-| **KeepEmptyLinesAtTheStartOfBlocks**    | `false`             | Avoids unnecessary blank lines at block starts.                                  |
+| Setting                                 | Value               | Description |
+| --------------------------------------- | ------------------- | ----------- |
+| **BasedOnStyle**                        | `Google`            | Provides a solid and widely adopted baseline. |
+| **Language**                            | `Cpp`               | Ensures C++-specific formatting rules. |
+| **IndentWidth / TabWidth**              | `4`                 | Uses 4 spaces per indent for improved block readability. |
+| **UseTab**                              | `Never`             | Enforces spaces only, ensuring editor consistency. |
+| **ColumnLimit**                         | `100`               | Balances readability with long expressions and templates. |
+| **BreakBeforeBraces**                   | `Allman`            | Places braces on their own line, improving visual structure. |
+| **AllowShortIfStatementsOnASingleLine** | `false`             | Forces explicit line breaks for clarity. |
+| **AllowShortLoopsOnASingleLine**        | `false`             | Prevents compact loop bodies from being overlooked. |
+| **AllowShortFunctionsOnASingleLine**    | `Inline`            | Allows concise inline functions only. |
+| **PointerAlignment**                    | `Left`              | Uses `T* ptr` instead of `T *ptr`. |
+| **DerivePointerAlignment**              | `false`             | Enforces explicit pointer alignment. |
+| **SpaceBeforeParens**                   | `ControlStatements` | Adds space in `if (` / `while (` for readability. |
+| **SortIncludes**                        | `true`              | Automatically sorts include directives. |
+| **IncludeBlocks**                       | `Regroup`           | Groups and reorders includes logically. |
+| **AlignConsecutiveAssignments**         | `true`              | Improves alignment of assignments. |
+| **AlignConsecutiveDeclarations**        | `true`              | Aligns consecutive declarations. |
+| **AlignOperands**                       | `true`              | Keeps expressions neatly aligned. |
+| **CommentPragmas**                      | `'^!'`              | Preserves pragma-style comments. |
+| **FixNamespaceComments**                | `true`              | Ensures closing namespace comments are present. |
+| **SpacesBeforeTrailingComments**        | `2`                 | Enforces consistent spacing before comments. |
+| **KeepEmptyLinesAtTheStartOfBlocks**    | `false`             | Avoids unnecessary blank lines. |
 
 ---
 
-### Windows (Visual Studio Code / PowerShell)
+### Windows (PowerShell)
 
-1. Install LLVM (includes clang-format):
+1. Install LLVM (includes `clang-format`):
 
-    - Download the LLVM installer for Windows (`https://github.com/llvm/llvm-project/releases`)
-    
-    - During setup, check “Add LLVM to the system PATH”.
+   - Download from:  
+     https://github.com/llvm/llvm-project/releases
+   - During installation, enable **“Add LLVM to PATH”**.
 
 2. Verify installation:
 
-```PowerShell
+```powershell
 clang-format --version
 ```
-3. Format all project files:
+3. Format source files (example):
 ```PowerShell
-clang-format -i include\*.h include\*.ipp src\*.cpp tests\*.cpp
+clang-format -i include/**/*.h src/**/*.cpp tests/**/*.cpp examples/**/*.cpp
 ```
 ### Linux / WSL (Debian/Ubuntu based)
 
@@ -338,24 +492,36 @@ clang-format --version
 ```
 3. Format all project files:
 ```bash
-clang-format -i include/*.h include/*.ipp src/*.cpp tests/*.cpp
+clang-format -i include/**/*.h src/**/*.cpp tests/**/*.cpp examples/**/*.cpp
 ```
 
 ---
 
 ## 📌 Notes
 
-- **C++ Standard**: The project uses **C++14**, configured via ```set(CMAKE_CXX_STANDARD 14)``` ensuring maximum compatibility with embedded systems, legacy compilers, and cross-platform builds.
-    
-- **Logging**:
+- **C++ Standard**
 
-    A fully centralized, thread-safe Logger utility is used throughout the project.
-    It provides:
-    - Atomic writes to avoid interleaved logs
-    - Timestamps with millisecond precision
-    - Configurable severity levels (DEBUG, INFO, WARN, ERROR)
-    - Uniform log formatting across all components (ThreadPool, JobQueue, Jobs, main application)
+  The project is implemented using **C++14**, configured via  
+  `set(CMAKE_CXX_STANDARD 14)`.
+
+  This choice ensures broad compatibility with:
+  - Conservative toolchains
+  - Long-term support compilers
+  - Embedded and cross-platform environments
+
+- **Logging**
+
+  A centralized logging utility is used across the project to provide:
+  - Consistent log formatting
+  - Timestamped messages with millisecond precision
+  - Severity levels (`DEBUG`, `INFO`, `WARN`, `ERROR`)
+
+  The logger implementation prevents interleaved output and can be safely reused
+  in multi-threaded contexts if required by integrating applications.
 
 ---
 
 ## ❤️ Acknowledgements
+
+- [nlohmann/json](https://github.com/nlohmann/json)  
+  For providing a robust, modern, and widely adopted JSON library.

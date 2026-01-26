@@ -1,0 +1,84 @@
+@startuml
+title json-multi-param - Class Diagram
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+package "jsonmp" {
+
+  class ParamSet {
+    +add<T>(name: std::string, default_value: T, constraints: Constraints<T> = {}): Param<T>&
+    +addInt(name: std::string, default_value: int, constraints: Constraints<int> = {}): Param<int>&
+    +addDouble(name: std::string, default_value: double, constraints: Constraints<double> = {}): Param<double>&
+    +addString(name: std::string, default_value: std::string, constraints: Constraints<std::string> = {}): Param<std::string>&
+    +addBool(name: std::string, default_value: bool, constraints: Constraints<bool> = {}): Param<bool>&
+
+    +set<T>(name: std::string, value: T, error: std::string&): bool
+    +get<T>(name: std::string): T
+    +get_or<T>(name: std::string, fallback: T): T
+
+    +to_json(): nlohmann::json
+    +from_json(j: nlohmann::json, error: std::string&): bool
+
+    +to_compact_string(): std::string
+    +from_compact_string(s: std::string, error: std::string&): bool
+  }
+
+  abstract class ParamBase {
+    +getName(): const std::string&
+    +getType(): ValueType
+    +to_string(): std::string
+    +from_string(repr: const std::string&, error: std::string&): bool
+  }
+
+  class "Param<T>" {
+    +Param(name: std::string, default_value: T, constraints: Constraints<T>)
+    +set(new_value: T, error: std::string&): bool
+    +get(): T
+    +to_string(): std::string
+    +from_string(repr: const std::string&, error: std::string&): bool
+  }
+
+  class "Constraints<T>" {
+    +has_min: bool
+    +min: T
+    +has_max: bool
+    +max: T
+    --
+    +has_min_length: bool
+    +min_length: std::size_t
+    +has_max_length: bool
+    +max_length: std::size_t
+    --
+    +has_allowed: bool
+    +allowed_values: std::vector<T>
+  }
+
+  enum ValueType {
+    Integer
+    UnsignedInteger
+    FloatingPoint
+    Boolean
+    String
+  }
+
+  class "ValueTypeOf<T>" <<trait>> {
+    {static} value: ValueType
+  }
+}
+
+' Ownership / Polymorphism
+ParamSet "1" *-- "*" ParamBase : owns (unique_ptr)
+
+' Inheritance
+ParamBase <|-- "Param<T>"
+
+' Composition (member field)
+"Param<T>" *-- "Constraints<T>" : constraints
+
+' Type tagging
+ParamBase --> ValueType : type
+
+' Trait mapping
+"ValueTypeOf<T>" ..> ValueType : maps
+
+@enduml
